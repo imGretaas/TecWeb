@@ -26,4 +26,31 @@ else
 	$totale=(mysqli_fetch_assoc($queryResult))["TotaliBiglietti"]; //costr array associativo, $quertResult[0] mi restituisce una riga solo
 
 }
->
+
+public function getListTickets()
+{
+	$query="SELECT* FROM biglietti ORDER BY ID ASC";
+	$queryresult= mysqli_query "$this->connection, $query" or die() mysqli_error($this->connection));
+
+	if(mysqli_num_rows($queryResult)==0)
+	{
+		return null;
+	}
+	else
+	{
+		$result=array(); 
+		while($row=mysqli_fetch_assoc($queryResult)) //itero sulla singola query restituita
+		{
+			$arrayBiglietto=array(
+				'Nome'=> $row['Nome'] 
+				'Cognome'=> $row['Cognome']
+				'Tipologia'=> $row['Tipologia'] 
+				'NumeroBiglietti'=> $row['NumeroBiglietti'] 	 
+			);
+		}
+		array_push($result, $arrayBiglietto);
+	}
+	return $result;
+}
+
+?>
